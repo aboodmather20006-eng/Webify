@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+@theme {
+  --color-vex-teal: #0f4c5c;
+  --color-vex-steel: #1a2b3d;
+
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-black font-sans text-white antialiased;
+}
+
+/* ---------- Hero: starfield (pure CSS, no canvas) ---------- */
+.vex-stars {
+  position: absolute;
+  inset: 0;
+  background-repeat: repeat;
+  pointer-events: none;
+}
+.vex-stars-1 {
+  background-image:
+    radial-gradient(1px 1px at 22px 34px,  rgba(255,255,255,.85), transparent),
+    radial-gradient(1px 1px at 118px 142px, rgba(255,255,255,.45), transparent),
+    radial-gradient(1.4px 1.4px at 196px 58px, rgba(255,255,255,.65), transparent),
+    radial-gradient(1px 1px at 244px 208px, rgba(255,255,255,.35), transparent),
+    radial-gradient(1px 1px at 64px 226px,  rgba(255,255,255,.55), transparent),
+    radial-gradient(1px 1px at 154px 250px, rgba(255,255,255,.3), transparent);
+  background-size: 290px 290px;
+  opacity: .55;
+  animation: vex-twinkle 6s ease-in-out infinite;
+}
+.vex-stars-2 {
+  background-image:
+    radial-gradient(1.6px 1.6px at 60px 90px,  rgba(255,255,255,.9), transparent),
+    radial-gradient(2px 2px at 300px 260px,    rgba(255,255,255,.75), transparent),
+    radial-gradient(1.2px 1.2px at 380px 50px, rgba(178,235,222,.6), transparent),
+    radial-gradient(1.2px 1.2px at 180px 340px, rgba(255,255,255,.5), transparent);
+  background-size: 460px 460px;
+  opacity: .45;
+  animation: vex-twinkle 8.5s ease-in-out 1.8s infinite;
+}
+@keyframes vex-twinkle {
+  0%, 100% { opacity: .55; }
+  50%      { opacity: .18; }
+}
+
+/* ---------- Hero: falling light streaks (pure CSS, teal-tinted) ---------- */
+.vex-streak {
+  position: absolute;
+  top: 0;
+  height: 26%; /* uniform length for every streak */
+  width: 1px;
+  background: linear-gradient(to bottom,
+    transparent 0%,
+    rgba(148, 226, 213, .06) 20%,
+    rgba(236, 254, 250, .6) 55%,
+    rgba(45, 180, 165, .4) 80%,
+    transparent 100%);
+  box-shadow: 0 0 6px rgba(15, 76, 92, .95), 0 0 16px rgba(15, 76, 92, .5);
+  animation: vex-streak-fall linear infinite;
+  pointer-events: none;
+  will-change: transform;
+}
+@keyframes vex-streak-fall {
+  0%   { transform: translateY(-120%); opacity: 0; }
+  8%   { opacity: var(--streak-opacity, 1); }
+  88%  { opacity: var(--streak-opacity, 1); }
+  100% { transform: translateY(500%); opacity: 0; }
+}
+
+/* ---------- Hero: ambient glow pulse ---------- */
+@keyframes vex-glow-pulse {
+  0%, 100% { opacity: .45; transform: scale(1); }
+  50%      { opacity: .62; transform: scale(1.07); }
+}
+.vex-glow {
+  animation: vex-glow-pulse 9s ease-in-out infinite;
+}
+
+/* ---------- Work section: scroll-on-hover browser mockups ---------- */
+/* container-type:size lets the child compute its travel from the frame's
+   height (100cqh) — pure transform, no layout work while animating */
+.vex-scrollframe {
+  container-type: size;
+  position: relative;
+  overflow: hidden;
+}
+.vex-scrollframe img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transform: translateY(0);
+  transition: transform 4.5s cubic-bezier(0.45, 0.05, 0.55, 0.95);
+  will-change: transform;
+}
+/* min() guards against images shorter than the frame ever scrolling down */
+.group:hover .vex-scrollframe img {
+  transform: translateY(min(0px, calc(-100% + 100cqh)));
+}
+
+/* ---------- CTA: gentle glow pulse on the WhatsApp button ---------- */
+@keyframes vex-cta-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.35), 0 0 24px rgba(15, 76, 92, 0.45); }
+  50%      { box-shadow: 0 0 0 12px rgba(20, 184, 166, 0), 0 0 46px rgba(15, 76, 92, 0.75); }
+}
+.vex-cta-pulse {
+  animation: vex-cta-pulse 3.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vex-streak, .vex-stars, .vex-glow, .vex-cta-pulse { animation: none !important; }
+  .vex-scrollframe img { transition: none; }
+}

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 96" width="340" height="96" role="img" aria-label="Webify — Digital Agency">
+  <!-- Placeholder wordmark (white, for dark UI). Swap this file with your real logo. -->
+  <text x="170" y="54" text-anchor="middle"
+        font-family="'Space Grotesk','Segoe UI',system-ui,sans-serif"
+        font-size="54" font-weight="700" letter-spacing="-2" fill="#ffffff">webify</text>
+  <text x="170" y="82" text-anchor="middle"
+        font-family="'Space Grotesk','Segoe UI',system-ui,sans-serif"
+        font-size="14" font-weight="600" letter-spacing="7" fill="#8fa3b0">DIGITAL AGENCY</text>
+</svg>
